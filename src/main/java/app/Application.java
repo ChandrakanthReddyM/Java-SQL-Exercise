@@ -11,17 +11,17 @@ public class Application {
 	
 	public static void main(String[] args) {
 		System.out.println("Hello world!!!!");
-		Student student = new Student();
-		student.setRollNumber(1);
-		student.setAge(30);
-		student.setName("Chandrakanth Reddy MACHUGARI");
 		StudentRepository studentRepo = new StudentRepositoryImpl();
-		int saveResult = studentRepo.save(student);
-		if (saveResult == 1) {
-			System.out.println("Record saved");
-		} else {
-			System.out.println("Save unsuccessful");
-		}
+//		Student student = new Student();
+//		student.setRollNumber(1);
+//		student.setAge(30);
+//		student.setName("Chandrakanth Reddy MACHUGARI");
+//		int saveResult = studentRepo.save(student);
+//		if (saveResult == 1) {
+//			System.out.println("Record saved");
+//		} else {
+//			System.out.println("Save unsuccessful");
+//		}
 		
 		List<Student> students = studentRepo.get();
 		students.forEach(System.out::println);
@@ -40,13 +40,20 @@ public class Application {
 			System.out.println("No student with NAME");
 		});
 		
-		int deleteResult = studentRepo.delete(getByName.get());
-		if (deleteResult == 1) {
-			System.out.println("Student delete = "+getByName);
+//		int deleteResult = studentRepo.delete(getByName.get());
+//		if (deleteResult == 1) {
+//			System.out.println("Student delete = "+getByName);
+//		} else {
+//			System.out.println("Delete Failed");
+//		}
+		Student updateAge = getByName.get();
+		updateAge.setAge(29);
+		int updateResult = studentRepo.update(getByName.get());
+		if (updateResult == 1) {
+			System.out.println("update Successfull");
 		} else {
-			System.out.println("Delete Failed");
+			System.out.println("Update Failed");
 		}
-		
 		
 	}
 

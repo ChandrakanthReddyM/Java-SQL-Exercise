@@ -7,7 +7,7 @@ import app.model.Student;
 
 public interface StudentRepository {
 	public int save(Student student);
-	public void update();
+	public int update(Student student);
 	public int delete(Student student);
 	public List<Student> get();
 	public Optional<Student> getById(int rollNumber);

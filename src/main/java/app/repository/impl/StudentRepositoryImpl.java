@@ -33,8 +33,18 @@ public class StudentRepositoryImpl implements StudentRepository {
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
+	public int update(Student student) {
+		
+		try(Connection connection = AbstractDao.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement("update student set age = ?, name = ? where rollnumber = ?");
+			statement.setInt(3, student.getRollNumber());
+			statement.setInt(1, student.getAge());
+			statement.setString(2, student.getName());
+			return statement.executeUpdate();
+		} catch(SQLException exception) {
+			exception.printStackTrace();
+		}
+		return -1;
 
 	}
 
