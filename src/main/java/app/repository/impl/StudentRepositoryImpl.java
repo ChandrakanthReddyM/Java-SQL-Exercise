@@ -66,8 +66,24 @@ public class StudentRepositoryImpl implements StudentRepository {
 
 	@Override
 	public Student getById(int rollNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		try(Connection connection = AbstractDao.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement("SELECT ROLLNUMBER, AGE, NAME FROM STUDENT WHERE ROLLNUMBER=?");
+			statement.setInt(1, rollNumber);
+			ResultSet resultSet = statement.executeQuery();
+			
+			Student student = new Student();
+			
+			while(resultSet.next()) {
+				student.setRollNumber(resultSet.getInt(1));
+				student.setAge(resultSet.getInt(2));
+				student.setName(resultSet.getString(3));
+			}
+			
+			return student;
+		} catch(SQLException exception) {
+			exception.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override

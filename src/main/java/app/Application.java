@@ -25,6 +25,9 @@ public class Application {
 		List<Student> students = studentRepo.get();
 		students.forEach(System.out::println);
 		
+		Student getById = studentRepo.getById(1);
+		System.out.println(getById);
+		
 	}
 
 }
