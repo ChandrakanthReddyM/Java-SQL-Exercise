@@ -39,9 +39,18 @@ public class StudentRepositoryImpl implements StudentRepository {
 	}
 
 	@Override
-	public void delete(int rollNumber) {
-		
-
+	public int delete(Student student) {
+		try(Connection connection = AbstractDao.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement("DELETE FROM STUDENT WHERE ROLLNUMBER = ? AND AGE = ? AND NAME = ?");
+			statement.setInt(1, student.getRollNumber());
+			statement.setInt(2, student.getAge());
+			statement.setString(3, student.getName());
+			
+			return statement.executeUpdate();
+		} catch(SQLException exception) {
+			exception.printStackTrace();
+			return -1;
+		}
 	}
 
 	@Override

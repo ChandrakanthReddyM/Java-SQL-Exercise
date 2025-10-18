@@ -11,34 +11,41 @@ public class Application {
 	
 	public static void main(String[] args) {
 		System.out.println("Hello world!!!!");
-//		Student student = new Student();
-//		student.setRollNumber(2);
-//		student.setAge(30);
-//		student.setName("Sonia BAGCHI");
+		Student student = new Student();
+		student.setRollNumber(1);
+		student.setAge(30);
+		student.setName("Chandrakanth Reddy MACHUGARI");
 		StudentRepository studentRepo = new StudentRepositoryImpl();
-//		int saveResult = studentRepo.save(student);
-//		if (saveResult == 1) {
-//			System.out.println("Record saved");
-//		} else {
-//			System.out.println("Save unsuccessful");
-//		}
+		int saveResult = studentRepo.save(student);
+		if (saveResult == 1) {
+			System.out.println("Record saved");
+		} else {
+			System.out.println("Save unsuccessful");
+		}
 		
 		List<Student> students = studentRepo.get();
 		students.forEach(System.out::println);
 		
 		Optional<Student> getById = studentRepo.getById(10);
-		getById.ifPresentOrElse(student -> {
-			System.out.println(student);
+		getById.ifPresentOrElse(s -> {
+			System.out.println(s);
 		}, () -> {
 			System.out.println("No student with ID");
 		});
 		
 		Optional<Student> getByName = studentRepo.getByName("Chandrakanth Reddy MACHUGARI");
-		getByName.ifPresentOrElse(student -> {
-			System.out.println(student);
+		getByName.ifPresentOrElse(s -> {
+			System.out.println(s);
 		}, () -> {
 			System.out.println("No student with NAME");
 		});
+		
+		int deleteResult = studentRepo.delete(getByName.get());
+		if (deleteResult == 1) {
+			System.out.println("Student delete = "+getByName);
+		} else {
+			System.out.println("Delete Failed");
+		}
 		
 		
 	}
