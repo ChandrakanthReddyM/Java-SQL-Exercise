@@ -1,6 +1,7 @@
 package app;
 
 import java.util.List;
+import java.util.Optional;
 
 import app.model.Student;
 import app.repository.StudentRepository;
@@ -25,8 +26,20 @@ public class Application {
 		List<Student> students = studentRepo.get();
 		students.forEach(System.out::println);
 		
-		Student getById = studentRepo.getById(1);
-		System.out.println(getById);
+		Optional<Student> getById = studentRepo.getById(10);
+		getById.ifPresentOrElse(student -> {
+			System.out.println(student);
+		}, () -> {
+			System.out.println("No student with ID");
+		});
+		
+		Optional<Student> getByName = studentRepo.getByName("Chandrakanth Reddy MACHUGARI");
+		getByName.ifPresentOrElse(student -> {
+			System.out.println(student);
+		}, () -> {
+			System.out.println("No student with NAME");
+		});
+		
 		
 	}
 

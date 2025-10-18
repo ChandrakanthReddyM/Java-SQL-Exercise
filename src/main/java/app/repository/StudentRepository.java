@@ -1,6 +1,7 @@
 package app.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import app.model.Student;
 
@@ -9,6 +10,6 @@ public interface StudentRepository {
 	public void update();
 	public void delete(int rollNumber);
 	public List<Student> get();
-	public Student getById(int rollNumber);
-	public Student getByName(String name);
+	public Optional<Student> getById(int rollNumber);
+	public Optional<Student> getByName(String name);
 }

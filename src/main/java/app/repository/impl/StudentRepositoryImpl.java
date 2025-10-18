@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import app.model.Student;
 import app.repository.StudentRepository;
@@ -65,7 +66,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 	}
 
 	@Override
-	public Student getById(int rollNumber) {
+	public Optional<Student> getById(int rollNumber) {
 		try(Connection connection = AbstractDao.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement("SELECT ROLLNUMBER, AGE, NAME FROM STUDENT WHERE ROLLNUMBER=?");
 			statement.setInt(1, rollNumber);
@@ -78,18 +79,39 @@ public class StudentRepositoryImpl implements StudentRepository {
 				student.setAge(resultSet.getInt(2));
 				student.setName(resultSet.getString(3));
 			}
-			
-			return student;
+			if (student.getRollNumber() == 0) {
+				return Optional.empty();
+			} else {
+				return Optional.ofNullable(student);
+			}
 		} catch(SQLException exception) {
 			exception.printStackTrace();
-			return null;
+			return Optional.empty();
 		}
 	}
 
 	@Override
-	public Student getByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Student> getByName(String name) {
+		try(Connection connection = AbstractDao.getConnection()) {
+			
+			PreparedStatement statement = connection.prepareStatement("SELECT ROLLNUMBER, AGE, NAME FROM STUDENT WHERE NAME = ?");
+			statement.setString(1, name.toUpperCase());
+			ResultSet resultSet = statement.executeQuery();
+			Student student = new Student();
+			while(resultSet.next()) {
+				student.setRollNumber(resultSet.getInt(1));
+				student.setAge(resultSet.getInt(2));
+				student.setName(resultSet.getString(3));
+			}
+			if (student.getRollNumber() == 0) {
+				return Optional.empty();
+			} else {
+				return Optional.ofNullable(student);
+			}
+		} catch (SQLException exception) {
+			Optional.empty();
+		}
+		return Optional.empty();
 	}
 
 }
