@@ -133,4 +133,22 @@ public class StudentRepositoryImpl implements StudentRepository {
 		return Optional.empty();
 	}
 
+	@Override
+	public int[] batchUpdate(List<Student> students) {
+		int[] result = new int[students.size()-1];
+		try (Connection connection = AbstractDao.getConnection()){
+			PreparedStatement statement = connection.prepareStatement("UPDATE STUDENT SET GENDER = ? WHERE ROLLNUMBER = ?");
+			for (Student student: students) {
+				statement.setString(1, student.getGender());
+				statement.setInt(2, student.getRollNumber());
+				statement.addBatch();
+			}
+			result = statement.executeBatch();
+			return result;
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+			return result;
+		}
+	}
+
 }

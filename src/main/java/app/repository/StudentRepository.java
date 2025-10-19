@@ -12,4 +12,5 @@ public interface StudentRepository {
 	public List<Student> get();
 	public Optional<Student> getById(int rollNumber);
 	public Optional<Student> getByName(String name);
+	public int[] batchUpdate(List<Student> students);
 }
